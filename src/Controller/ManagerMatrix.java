@@ -2,15 +2,19 @@ package Controller;
 import Model.Matrix;
         
 public class ManagerMatrix {
-    private Matrix matrix = new Matrix();
-    public void EnterMatrix() {
-       matrix.Nhap();
+    public static boolean answer = false;
+    public static Matrix matrixIn = null;
+    public static Matrix matrixOut = null;
+    private static ManagerMatrix singleton = null;
+    private ManagerMatrix() {
+        
     }
-    public void PrintfMatrix() {
-        matrix.In();
-        System.out.println("\n");
-    }
-    public void solve() {
-          matrix.matrix = new Solve(this.matrix.getMatrix()).Answer();
+    public static ManagerMatrix getInstance() {
+        if( singleton == null) {
+            singleton = new ManagerMatrix();
+            matrixIn = new Matrix();
+            matrixOut = new Matrix();
+        }
+        return singleton;
     }
 }

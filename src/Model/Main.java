@@ -1,10 +1,9 @@
 package Model;
 
-import view.View;
+import view.JFrame;
 
 public class Main {
     public static void main(String[] args) {
-        View view = new View();
-        view.Run();
+        new JFrame();
     }
 }

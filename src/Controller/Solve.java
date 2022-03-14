@@ -1,28 +1,28 @@
 package Controller;
-
 import java.util.Arrays;
 
-/**
- *
- * @author Acer
- */
 public class Solve {
-    int matrix[][] = null;
-    int matrixSolve[][] = null;
-    public Solve(int matrix[][]) {
-        this.matrix = Arrays.copyOfRange(matrix, 0, matrix.length);
+    private ManagerMatrix mnMatrix = ManagerMatrix.getInstance(); 
+    private int matrix[][] = null;
+    private int matrixSolve[][] = null;
+    private boolean canRun;
+    public Solve() {
+        this.matrix = mnMatrix.matrixIn.getMatrix();
+        this.matrixSolve = mnMatrix.matrixOut.getMatrix();
     }
-    public int [][] Answer() {
+    public void Answer() {
         Init();
-        Try(1,1);
-        return this.matrixSolve;
+        if( canRun == true ) {
+            Try(1,1);
+        }
     }
-    private boolean check = false;
     private boolean vsFull3x3[][][] = new boolean[10][10][10];
     private boolean vsRow[][] = new boolean[10][10];
     private boolean vsLine[][] = new boolean[10][10];
     private int countNumbers[] = new int [10];
     private void Init() {
+        mnMatrix.answer = false;
+        canRun = true;
         for(int i = 1; i <= 9; i++) {
             for(int j = 1; j<= 9 ;j++) {
                 for(int k = 1; k <= 9; k++) {
@@ -37,19 +37,23 @@ public class Solve {
             }
         }
         for(int i = 1; i <= 9; i++ ) {
+            countNumbers[i] = 0;
+        }
+        for(int i = 1; i <= 9; i++ ) {
             for(int j = 1; j <= 9; j++ ) {
                 if( matrix[i][j] != 0 ) {
-                    int num = matrix[i][j];
+                    int num = matrix[i][j];             
+                    if( vsFull3x3[change(i)][change(j)][num] == true || vsRow[i][num] == true || vsLine[j][num] == true || countNumbers[num] >= 9) {
+                        canRun = false;
+                        return;
+                    }
                     vsRow[i][num] = true;
                     vsLine[j][num] = true;
                     vsFull3x3[change(i)][change(j)][num] = true;
+                    countNumbers[num]++;
                 }
             }
         }
-        for(int i = 1; i <= 9; i++ ) {
-            countNumbers[i] = 0;
-        }
-        check = false;
     }
     private int change(int n) {
         if( n >= 1 && n <= 3 ) n = 1;
@@ -58,7 +62,7 @@ public class Solve {
         return n;
     }
     private void Try(int x,int y) {
-        if( check == true) {
+        if( mnMatrix.answer == true) {
             return;
         }
         if( matrix[x][y] == 0 ) {
@@ -91,14 +95,13 @@ public class Solve {
             else {
                 if( x == 9 && y == 9 ) {
                 // Coppy array
-                matrixSolve = new int[10][10];
                     for(int i = 1; i <= 9; i++) {
                         for(int j = 1; j <= 9; j++ ) {
                             matrixSolve[i][j] = matrix[i][j]; 
                         }
                     } 
                 // Coppy array
-                    check = true;
+                    mnMatrix.answer = true;
 		}
                 else if( y < 9 ) {
                     Try(x-2,y+1);

@@ -1,1 +1,1 @@
-sudoku..
+.sudoku 9x9.
