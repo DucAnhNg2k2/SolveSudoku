@@ -76,7 +76,7 @@ public class Controller {
             }
         }
     }
-    public void ChangeMatrixToText(TextField textMatrix[][]) {
+    public void changeMatrixToText(TextField textMatrix[][]) {
         ManagerMatrix temp = ManagerMatrix.getInstance();
         for(int i = 0; i < 9; i++ ){
             for(int j = 0; j < 9 ;j++ ) {
@@ -89,7 +89,7 @@ public class Controller {
                 else {
                     textMatrix[i][j].setForeground(Color.RED);
                 }
-            }
+            }  
         }
     }
 }

@@ -3,13 +3,11 @@ package view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.TextField;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import Controller.ManagerMatrix;
-import Controller.Solve;
+
 import Controller.Controller;
+import Controller.ManagerMatrix;
+import javax.swing.JOptionPane;
+
 public class JFrame extends javax.swing.JFrame {
     private ManagerMatrix mnMatrix = ManagerMatrix.getInstance();
     private Controller controller = Controller.getInstance(); 
@@ -73,7 +71,7 @@ public class JFrame extends javax.swing.JFrame {
         for(int i = 0; i < 9; i++ ) {
             for(int j = 0; j < 9; j++ ) {
                 String s = inputMatrix[i][j].getText();
-                if( s.equals("") != true && ( s.compareTo("1") < 0 || s.compareTo("9") > 0) ) {
+                if( s.length() > 1 || (s.equals("")!= true&&(s.compareTo("1")< 0||s.compareTo("9")>0))) {
                     JOptionPane.showMessageDialog(rootPane, "Không hợp lệ!");
                     return;
                 }
@@ -94,7 +92,7 @@ public class JFrame extends javax.swing.JFrame {
     private TextField inputMatrix[][] = new TextField[9][9];
     private void setMatrix() {
         final int size = 45;
-        int height = 40, width = 85;
+        int height = 40, width = 98;
         for(int i = 0 ; i< 9 ;i++) {
             for(int j = 0; j < 9; j++) {
               inputMatrix[i][j] = new TextField("");
@@ -121,7 +119,7 @@ public class JFrame extends javax.swing.JFrame {
         controller.changeTextToMatrix(inputMatrix);
         controller.solve();
         if( mnMatrix.answer == true ) {
-            controller.ChangeMatrixToText(inputMatrix);
+            controller.changeMatrixToText(inputMatrix);
         }
         else {
             JOptionPane.showMessageDialog(rootPane, "Không tồn tại !");
